@@ -1,4 +1,6 @@
-# RandomDimensionOpening
+# RandomDimensionOpening · 随机维度开局
+
+![RandomDimensionOpening logo](src/main/resources/logo.png)
 
 **A different dimension. The same vanilla survival rules.**
 
