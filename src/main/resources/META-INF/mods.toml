@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[47,48)"
+license="CC0-1.0"
+
+[[mods]]
+modId="randimopen"
+version="${version}"
+displayName="RandomDimensionOpening"
+authors="nivpisum (SnowyPea)"
+logoFile="logo.png"
+displayTest="IGNORE_SERVER_VERSION"
+description='''
+Start a new survival world in a randomly chosen loaded dimension. Every dimension has an equal chance; the shared spawn is chosen once and persists. Nearby positions are more likely, and vanilla terrain search, beds and respawn anchors remain in charge. No artificial platforms.
+
+随机维度开局：所有已加载维度等概率参加，世界出生点选定后保存，供新玩家和没有有效个人重生点的玩家共同使用。靠近原点的候选位置概率更高；天然落点、床、重生锚和出生散布复用原版，不额外制造平台。
+'''
+
+[[dependencies.randimopen]]
+modId="forge"
+mandatory=true
+versionRange="[47.4.23,48)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.randimopen]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1]"
+ordering="NONE"
+side="BOTH"

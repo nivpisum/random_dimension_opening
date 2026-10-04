@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.nivpisum.randimopen.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "randimopen.refmap.json",
+  "mixins": [
+    "MinecraftServerMixin",
+    "MinecraftServerAccessor",
+    "PlayerListMixin",
+    "ServerLevelMixin"
+  ],
+  "injectors": { "defaultRequire": 1 }
+}

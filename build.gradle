@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '6.0.54'
+    id 'org.spongepowered.mixin' version '0.7.38'
+}
+
+group = 'org.nivpisum.randimopen'
+version = '2.0.0'
+base { archivesName = 'randimopen' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(17) }
+minecraft { mappings channel: 'official', version: '1.20.1' }
+mixin {
+    add sourceSets.main, 'randimopen.refmap.json'
+    config 'randimopen.mixins.json'
+}
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+}
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.4.23'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+}
+dependencyLocking { lockAllConfigurations() }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 17 }
+tasks.named('compileJava', JavaCompile) {
+    options.incremental = false
+    outputs.files(
+        layout.buildDirectory.file('tmp/compileJava/compileJava-refmap.json'),
+        layout.buildDirectory.file('tmp/compileJava/compileJava-mappings.tsrg'))
+}
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+tasks.named('processResources') {
+    inputs.property 'version', project.version
+    filesMatching('META-INF/mods.toml') { expand version: project.version }
+}
+tasks.named('jar') {
+    archiveFileName = "randimopen-${project.version}-forge-1.20.1.jar"
+    from('LICENSE')
+    from('NOTICE.md')
+    manifest { attributes 'MixinConfigs': 'randimopen.mixins.json' }
+    finalizedBy 'reobfJar'
+}
+tasks.named('test') {
+    useJUnitPlatform()
+    def scratch = layout.buildDirectory.dir('test_tmp').get().asFile
+    systemProperty 'java.io.tmpdir', scratch.absolutePath
+    doFirst { scratch.mkdirs() }
+}
